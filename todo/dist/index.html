@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>My todo list</title>
+</head>
+<body>
+    <script src="main.js" defer></script>
+    <div class="container">
+        <nav>
+            <h1>To do list</h1>
+        </nav>
+        <div class="middle">
+            <div class="sidebar">
+                <ul>
+                    <li id="home">Home</li>
+                    <li id="today">Today</li>
+                    <li id="week">This week</li>
+                    <li id="notes">Notes</li>
+                    <li id="projects">Projects</li>
+                </ul>   
+                <div id="newProject" class="button"></div>
+            </div>
+            <div class="main" id="main">
+                <div id="formDiv">
+                    <form anoShowction="form.html" method="GET" id="form">
+                        <div>
+                            <label for="title">Title</label>
+                            <input type="text" name="title" id="title">
+                        </div>
+                        <div>
+                            <label for="description">Description</label>
+                            <input type="text" name="description" id="description">
+                        </div>
+                        <div>
+                            <label for="date">Due date</label>
+                            <input type="date" name="date" id="date">
+                        </div>
+                        <div>
+                            <label for="priority">Priority</label>
+                        </div>
+                        <div>
+                            <label for="low">Low</label>
+                            <input type="radio" name="priority" id="low">
+                            <label for="medium">Medium</label>
+                            <input type="radio" name="priority" id="medium">
+                            <label for="high">High</label>
+                            <input type="radio" name="priority" id="high">
+                        </div>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <footer>Made By River Sprite</footer>
+    </div>
+</body>
+</html>
