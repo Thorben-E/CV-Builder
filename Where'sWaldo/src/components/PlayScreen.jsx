@@ -2,17 +2,27 @@ import React, { useEffect, useState } from "react"
 
 const PlayScreen = ({ changePlay, changeEnd, imageList }) => {
     const [selectorActive, setSelectorActive] = useState(false)
-    let start = Date.now()
-    const calculateTime = () => {
-        let millis = Date.now() - start
-        return Math.floor(millis / 1000)
-    }
-    const [timer, setTimer] = useState(Date.now()) 
+    const [time, setTime] = useState(Date.now());
+    const [waldo, setWaldo] = useState(true)
+    const [frank, setFrank] = useState(true)
+    const [bella, setBella] = useState(true)
+    const start = Date.now()
+    useEffect(() => {
+        const interval = setInterval(() => setTime(Math.floor((Date.now()-start) / 1000)), 1000);
+        return () => {
+          clearInterval(interval);
+        };
+    }, []);
     const mapClick = (e) => {
         setSelectorActive(true)
+        changeSelectorPosition(e)
+    }
+    const changeSelectorPosition = (e) => {
+        console.log(imageList)
         let x = e.pageX
         let y = e.pageY
         const selector = document.getElementById('selector')
+        selector.style.position = 'absolute'
         selector.style.left = x+'px';
         selector.style.top = y+'px';
         selector.style.opacity = 100;
@@ -24,32 +34,25 @@ const PlayScreen = ({ changePlay, changeEnd, imageList }) => {
     const selectorClick = (caracter) => {
 
     }
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            document.getElementById('0').remove()
-            start = Date.now()
-        }, 100);
-        document.getElementById('1').addEventListener('click', (e) => console.log(e))
-        return () => clearTimeout(timer)
-    }, []);
     
     return (
     <div className="PlayScreen">
         <nav>
             <button onClick={changeScreen}>remove play</button>
-            <button onClick={() => console.log(calculateTime())}>log time</button>
-            <div>circles</div>
-            <div>{timer}</div>
+            <div>
+                <img className="character" src={imageList[1]} />
+                <img className="character" src={imageList[2]} />
+                <img className="character" src={imageList[0]} />
+            </div>
+            <div>{time} sec</div>
         </nav>
         <main>
-            {imageList.map((url,i) => {
-                return <img onClick={(e) => mapClick(e)} id={i} key={i} src={url} />
-            })}
-            {selectorActive && <div className="selector" id="selector">
-                <div className="selectorcell" onClick={() => selectorClick('waldo')}>Waldo</div>
-                <div className="selectorcell" onClick={() => selectorClick('snaldo')}>Snaldo</div>
-                <div className="selectorcell" onClick={() => selectorClick('haldo')}>Haldo</div>
-            </div>}
+        <img onClick={(e) => mapClick(e)} src={imageList[7]} />
+        <div className="selector" id="selector">
+            <div className="selectorcell" onClick={() => selectorClick('waldo')}>Waldo</div>
+            <div className="selectorcell" onClick={() => selectorClick('snaldo')}>Snaldo</div>
+            <div className="selectorcell" onClick={() => selectorClick('haldo')}>Haldo</div>
+        </div>
         </main>
     </div>
   )
