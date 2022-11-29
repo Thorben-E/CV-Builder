@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './App.css'
 import { initializeApp } from 'firebase/app'
+import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore'
 import { getDownloadURL, getStorage, listAll, ref } from 'firebase/storage'
 import BeginScreen from './components/BeginScreen';
 import PlayScreen from './components/PlayScreen';
@@ -17,6 +18,28 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app)
+export const firestore = getFirestore();
+const Leaderboard = doc(firestore, 'Leaderboard/Leaderboard')
+
+const firecloudData = doc(firestore, 'Coordinates/Coordinates')
+async function getCoordinates() {
+  const mySnapshot = await getDoc(firecloudData);
+  if (mySnapshot.exists()) {
+    const docData = mySnapshot.data();
+    console.log(`data: ${JSON.stringify(docData)}`)
+  }
+}
+
+getCoordinates()
+
+const setScore = (name, time) => {
+  const score = {
+    name: name,
+    time: time
+  };
+  setDoc(Leaderboard, score)
+}
+setScore('freek', 18, { merge: true })
 
 function App() {
   const [begin, setBegin] = useState(true)
